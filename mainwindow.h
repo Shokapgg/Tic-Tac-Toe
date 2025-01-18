@@ -18,7 +18,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void disableBox(short int box);
+    void makeMove(short int box, char player);
     void disableAllBoxes();
     void drawX(short int box);
     void drawO(short int box);

@@ -148,6 +148,132 @@
       <string/>
      </property>
     </widget>
+    <widget class="QLabel" name="label0">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label1">
+     <property name="geometry">
+      <rect>
+       <x>63</x>
+       <y>0</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label2">
+     <property name="geometry">
+      <rect>
+       <x>126</x>
+       <y>0</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>63</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label4">
+     <property name="geometry">
+      <rect>
+       <x>63</x>
+       <y>63</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label5">
+     <property name="geometry">
+      <rect>
+       <x>126</x>
+       <y>63</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label6">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>126</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label7">
+     <property name="geometry">
+      <rect>
+       <x>63</x>
+       <y>126</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label8">
+     <property name="geometry">
+      <rect>
+       <x>126</x>
+       <y>126</y>
+       <width>63</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <zorder>label8</zorder>
+    <zorder>label7</zorder>
+    <zorder>label6</zorder>
+    <zorder>label5</zorder>
+    <zorder>label4</zorder>
+    <zorder>label3</zorder>
+    <zorder>label2</zorder>
+    <zorder>label1</zorder>
+    <zorder>label0</zorder>
     <zorder>box8</zorder>
     <zorder>box7</zorder>
     <zorder>box6</zorder>
@@ -218,7 +344,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>32</pointsize>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="inputMask">
