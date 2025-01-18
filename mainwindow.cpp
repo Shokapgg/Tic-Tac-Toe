@@ -127,16 +127,6 @@ void MainWindow::disableAllBoxes(){
 
 
 
-void MainWindow::drawX(short int box){
-
-}
-
-void MainWindow::drawO(short int box){
-
-}
-
-
-
 void MainWindow::setWin(short int num){
     MainWindow::disableAllBoxes();
     if(spaces[num] == 'X'){

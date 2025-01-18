@@ -20,8 +20,6 @@ public:
 private slots:
     void makeMove(short int box, char player);
     void disableAllBoxes();
-    void drawX(short int box);
-    void drawO(short int box);
     void setWin(short int num);
     bool checkWinner();
     bool checkTie();
