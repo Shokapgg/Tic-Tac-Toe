@@ -25,8 +25,8 @@ char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 
 
 void MainWindow::makeMove(short int box, char player){
-    QPixmap X("resources/X.png");
-    QPixmap O("resources/O.png");
+    QPixmap X("D:/Projects/Qt Widgets/Tic-Tac-Toe/resources/X.png");
+    QPixmap O("D:/Projects/Qt Widgets/Tic-Tac-Toe/resources/O.png");
 
     switch(box){
     case 0:
