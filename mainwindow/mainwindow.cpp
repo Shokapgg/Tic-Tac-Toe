@@ -11,16 +11,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Tic-tac-toe");
+    ui->centralwidget->setWindowOpacity(qreal(0)/100);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    ui->centralwidget->setWindowOpacity(qreal(0)/100);
 }
-
-
-char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 
 void MainWindow::setWin(short int num){
     MainWindow::disableAllBoxes();
