@@ -15,10 +15,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 set(TS_FILES Tic-Tac-Toe_en_001.ts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        source/main.cpp
+        source/mainwindow/mainwindow.cpp
+        source/mainwindow/mainwindow.h
+        source/mainwindow/mainwindow.ui
         ${TS_FILES}
 )
 
