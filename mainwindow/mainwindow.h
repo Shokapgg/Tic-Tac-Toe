@@ -20,6 +20,8 @@ public:
 private slots:
     void makeMove(short int box, char player);
     void disableAllBoxes();
+    void enableAllBoxes();
+    void setBoxesBlank();
     void setWin(short int num);
     bool checkWinner();
     bool checkTie();
@@ -34,6 +36,8 @@ private slots:
     void on_box6_released();
     void on_box7_released();
     void on_box8_released();
+
+    void on_newGame_button_released();
 
 private:
     Ui::MainWindow *ui;
