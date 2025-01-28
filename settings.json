@@ -1,5 +1,6 @@
 {
-    "gamemode": "PvE",
-    "ai_level": "Easy",
-    "pvp_mode": "Casual"
+    "gamemode": "pve",
+    "ai_level": "easy",
+    "start_against_ai": "x",
+    "pvp_mode": "casual"
 }

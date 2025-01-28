@@ -4,6 +4,8 @@
 #include <ctime>
 #include <QPixmap>
 #include <QGraphicsOpacityEffect>
+#include <QJsonDocument>
+#include <tuple>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +19,24 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_newGame_button_released()
+{
+    MainWindow::setBoxesBlank();
+    ui->gameStatus_textBox->setText("");
+    std::tuple<short int, short int, short int, short int> settings;   //settings:
+    settings = std::make_tuple(0, 0, 0, 0);                            //0: "gamemode"
+    settings = readJson(settings);                                     //1: "ai_level"
+    if(get<0>(settings) == 0){                                         //2: "start_against_ai"                                  //3: "pvp_mode"
+        if (get<3>(settings) == 1) {
+            MainWindow::getAIMove();    //"ai_level" not yet implemented
+        }
+    }
+    else if (get<0>(settings) == 1){    //"pvp not implemented yet"
+
+    }
+    MainWindow::enableAllBoxes();
 }
 
 void MainWindow::setWin(short int num){
@@ -139,5 +159,3 @@ void MainWindow::on_box8_released()
 {
     move(8);
 }
-
-
