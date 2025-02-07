@@ -10,16 +10,20 @@
 #include <tuple>
 #include <QFile>
 
-extern char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char player = 'X';
+char opponent = 'O';
+std::tuple<short int, short int, short int, short int> settings;
+short int moveNum = 0;
 
-void MainWindow::makeMove(short int box, char player){
+void MainWindow::makeMove(short int box, char currentPlayer){
     QPixmap X(":/resources/X.png");
     QPixmap O(":/resources/O.png");
 
     switch(box){
     case 0:
         ui->box0->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label0->setPixmap(X);
         }
         else {
@@ -28,7 +32,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 1:
         ui->box1->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label1->setPixmap(X);
         }
         else {
@@ -37,7 +41,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 2:
         ui->box2->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label2->setPixmap(X);
         }
         else {
@@ -46,7 +50,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 3:
         ui->box3->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label3->setPixmap(X);
         }
         else {
@@ -55,7 +59,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 4:
         ui->box4->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label4->setPixmap(X);
         }
         else {
@@ -64,7 +68,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 5:
         ui->box5->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label5->setPixmap(X);
         }
         else {
@@ -73,7 +77,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 6:
         ui->box6->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label6->setPixmap(X);
         }
         else {
@@ -82,7 +86,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 7:
         ui->box7->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label7->setPixmap(X);
         }
         else {
@@ -91,7 +95,7 @@ void MainWindow::makeMove(short int box, char player){
         break;
     case 8:
         ui->box8->setEnabled(false);
-        if(player == 'X'){
+        if(currentPlayer == 'X'){
             ui->label8->setPixmap(X);
         }
         else {
@@ -148,7 +152,134 @@ void MainWindow::setBoxesBlank(){
     spaces[8] = ' ';
 }
 
-std::tuple<short int, short int, short int, short int> readJson(std::tuple<short int, short int, short int, short int> values){
+void MainWindow::setWin(short int num){
+    MainWindow::disableAllBoxes();
+    if(spaces[num] == player){
+        if(get<3>(settings) == 0){
+            ui->gameStatus_textBox->setText("X Won");
+        }
+        else {
+            ui->gameStatus_textBox->setText("You Won");
+        }
+    }
+    else{
+        if(get<3>(settings) == 0){
+            ui->gameStatus_textBox->setText("O Won");
+        }
+        else {
+            ui->gameStatus_textBox->setText("You Lost");
+        }
+    }
+}
+
+bool MainWindow::checkWinner() {
+    //Horizontal checking
+    if (spaces[0] != ' ' && spaces[0] == spaces[1] && spaces[1] == spaces[2]) {
+        setWin(0);
+        return true;
+    }
+    else if (spaces[3] != ' ' && spaces[3] == spaces[4] && spaces[4] == spaces[5]) {
+        setWin(3);
+        return true;
+    }
+    else if (spaces[6] != ' ' && spaces[6] == spaces[7] && spaces[7] == spaces[8]) {
+        setWin(6);
+        return true;
+    }
+
+    //Vertical checking
+    else if (spaces[0] != ' ' && spaces[0] == spaces[3] && spaces[3] == spaces[6]) {
+        setWin(0);
+        return true;
+    }
+    else if (spaces[1] != ' ' && spaces[1] == spaces[4] && spaces[4] == spaces [7]) {
+        setWin(1);
+        return true;
+    }
+    else if (spaces[2] != ' ' && spaces[2] == spaces[5] && spaces[5] == spaces [8]) {
+        setWin(2);
+        return true;
+    }
+
+    //Cross checking
+    else if (spaces[0] != ' ' && spaces[0] == spaces[4] && spaces[4] == spaces[8]) {
+        setWin(0);
+        return true;
+    }
+    else if (spaces[2] != ' ' && spaces[2] == spaces[4] && spaces[4] == spaces[6]) {
+        setWin(2);
+        return true;
+    }
+    return false;
+}
+
+bool MainWindow::checkTie() {
+    for(int i = 0; i <= 8; i++) {
+        if (spaces[i] == ' '){
+            return false;
+        }
+    }
+    ui->gameStatus_textBox->setText("It's a Tie");
+    return true;
+}
+
+void MainWindow::getAIMove(short int difficulty){           //difficulty:
+    srand(time(NULL));                                      //0: easy
+    if (difficulty == 0) {                                  //1: medium
+        while (0 == 0){                                     //2: hard (unbeatable)
+            short int temp = rand()%9;
+            if (spaces[temp] == ' '){
+                spaces[temp] = opponent;
+                MainWindow::makeMove(temp, opponent);
+                break;
+            }
+        }
+    }
+}
+
+void MainWindow::move(short int box){
+    if (get<3>(settings) == 0){
+        if (moveNum == 0){
+            MainWindow::makeMove(box, player);
+            spaces[box] = player;
+            if(MainWindow::checkWinner() || MainWindow::checkTie()){
+                return;
+            }
+            MainWindow::makeMove(box, opponent);
+            spaces[box] = opponent;
+            if(MainWindow::checkWinner() || MainWindow::checkTie()){
+                return;
+            }
+            moveNum = 1;
+        }
+        else {
+            moveNum = 0;
+            MainWindow::makeMove(box, player);
+            spaces[box] = player;
+            if(MainWindow::checkWinner() || MainWindow::checkTie()){
+                return;
+            }
+            MainWindow::makeMove(box, opponent);
+            spaces[box] = opponent;
+            if(MainWindow::checkWinner() || MainWindow::checkTie()){
+                return;
+            }
+        }
+    }
+    else {
+        MainWindow::makeMove(box, player);
+        spaces[box] = player;
+        if(MainWindow::checkWinner() || MainWindow::checkTie()){
+            return;
+        }
+        MainWindow::getAIMove(0);
+        if(MainWindow::checkWinner() || MainWindow::checkTie()){
+            return;
+        }
+    }
+}
+
+void readJson(){
     QString val;
     QFile file;
     file.setFileName("settings.json");
@@ -161,40 +292,41 @@ std::tuple<short int, short int, short int, short int> readJson(std::tuple<short
 
     QJsonValue value = sett2.value(QString("gamemode"));    //reading of "gamemode"
     if (value == "pve"){
-        get<0>(values) = 0;
+        get<0>(settings) = 0;
     }
     else {
-        get<0>(values) = 1;
+        get<0>(settings) = 1;
     }
 
     value = sett2.value(QString("ai_level"));               //reading of "ai_level"
     if (value == "easy"){
-        get<1>(values) = 0;
+        get<1>(settings) = 0;
     }
     else if (value == "medium"){
-        get<1>(values) = 1;
+        get<1>(settings) = 1;
     }
     else {
-        get<1>(values) = 2;
+        get<1>(settings) = 2;
     }
 
-    value = sett2.value(QString("start_against_ai"));       //reading of "gamemode"
+    value = sett2.value(QString("start_against_ai"));       //reading of "start_against_ai"
     if (value == "x"){
-        get<2>(values) = 0;
+        get<2>(settings) = 0;
     }
     else {
-        get<2>(values) = 1;
+        get<2>(settings) = 1;
     }
 
     value = sett2.value(QString("pvp_mode"));               //reading of "pvp_mode"
-    if (value == "casual"){
-        get<2>(values) = 0;
+    if (value == "local"){
+        get<3>(settings) = 0;
+    }
+    else if (value == "casual") {
+        get<3>(settings) = 1;
     }
     else {
-        get<2>(values) = 1;
+        get<3>(settings) = 2;
     }
-
-    return values;
 }
 
 #endif // CORE_H
