@@ -2,5 +2,5 @@
     "gamemode": "pve",
     "ai_level": "easy",
     "start_against_ai": "x",
-    "pvp_mode": "casual"
+    "pvp_mode": "local"
 }

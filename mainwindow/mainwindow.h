@@ -25,7 +25,7 @@ private slots:
     void setWin(short int num);
     bool checkWinner();
     bool checkTie();
-    void getAIMove();
+    void getAIMove(short int difficulty);
     void move(short int box);
     void on_box0_released();
     void on_box1_released();
@@ -36,7 +36,6 @@ private slots:
     void on_box6_released();
     void on_box7_released();
     void on_box8_released();
-
     void on_newGame_button_released();
 
 private:

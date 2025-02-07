@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Tic-tac-toe");
     ui->centralwidget->setWindowOpacity(qreal(0)/100);
+    MainWindow::disableAllBoxes();
 }
 
 MainWindow::~MainWindow()
@@ -24,103 +25,38 @@ MainWindow::~MainWindow()
 void MainWindow::on_newGame_button_released()
 {
     MainWindow::setBoxesBlank();
-    ui->gameStatus_textBox->setText("");
-    std::tuple<short int, short int, short int, short int> settings;   //settings:
-    settings = std::make_tuple(0, 0, 0, 0);                            //0: "gamemode"
-    settings = readJson(settings);                                     //1: "ai_level"
-    if(get<0>(settings) == 0){                                         //2: "start_against_ai"                                  //3: "pvp_mode"
-        if (get<3>(settings) == 1) {
-            MainWindow::getAIMove();    //"ai_level" not yet implemented
+    ui->gameStatus_textBox->setText("");                               //settings:
+    readJson();                                                        //0: "gamemode"
+    if(get<0>(settings) == 0){                                         //1: "ai_level"
+        if (get<2>(settings) == 0) {                                   //2: "start_against_ai"
+            player = 'X';                                              //3: "pvp_mode"
+            opponent = 'O';
+            enableAllBoxes();
+        }
+        else {
+            player = 'O';
+            opponent = 'X';
+            getAIMove(0);
+            if(MainWindow::checkWinner() || MainWindow::checkTie()){
+                return;
+            }
+            enableAllBoxes();
         }
     }
-    else if (get<0>(settings) == 1){    //"pvp not implemented yet"
+    else if (get<0>(settings) == 1){    //"online pvp not implemented yet"
+        if (get<3>(settings) == 0) {
+            player = 'X';
+            opponent = 'O';
+            enableAllBoxes();
+        }
+        else if (get<3>(settings) == 1) {
 
+        }
+        else {
+
+        }
     }
     MainWindow::enableAllBoxes();
-}
-
-void MainWindow::setWin(short int num){
-    MainWindow::disableAllBoxes();
-    if(spaces[num] == 'X'){
-        ui->gameStatus_textBox->setText("You Won");
-    }
-    else{
-        ui->gameStatus_textBox->setText("You Lost");
-    }
-}
-
-bool MainWindow::checkWinner() {
-    //Horizontal checking
-    if (spaces[0] != ' ' && spaces[0] == spaces[1] && spaces[1] == spaces[2]) {
-        setWin(0);
-        return true;
-    }
-    else if (spaces[3] != ' ' && spaces[3] == spaces[4] && spaces[4] == spaces[5]) {
-        setWin(3);
-        return true;
-    }
-    else if (spaces[6] != ' ' && spaces[6] == spaces[7] && spaces[7] == spaces[8]) {
-        setWin(6);
-        return true;
-    }
-
-    //Vertical checking
-    else if (spaces[0] != ' ' && spaces[0] == spaces[3] && spaces[3] == spaces[6]) {
-        setWin(0);
-        return true;
-    }
-    else if (spaces[1] != ' ' && spaces[1] == spaces[4] && spaces[4] == spaces [7]) {
-        setWin(1);
-        return true;
-    }
-    else if (spaces[2] != ' ' && spaces[2] == spaces[5] && spaces[5] == spaces [8]) {
-        setWin(2);
-        return true;
-    }
-
-    //Cross checking
-    else if (spaces[0] != ' ' && spaces[0] == spaces[4] && spaces[4] == spaces[8]) {
-        setWin(0);
-        return true;
-    }
-    else if (spaces[2] != ' ' && spaces[2] == spaces[4] && spaces[4] == spaces[6]) {
-        setWin(2);
-        return true;
-    }
-    return false;
-}
-
-bool MainWindow::checkTie() {
-    for(int i = 0; i <= 8; i++) {
-        if (spaces[i] == ' '){
-            return false;
-        }
-    }
-    ui->gameStatus_textBox->setText("It's a Tie");
-    return true;
-}
-
-
-void MainWindow::getAIMove(){
-    srand(time(NULL));
-    while (0 == 0){
-        short int temp = rand()%8;
-        if (spaces[temp] == ' '){
-            spaces[temp] = 'O';
-            MainWindow::makeMove(temp, 'O');
-            break;
-        }
-    }
-}
-
-void MainWindow::move(short int box){
-    MainWindow::makeMove(box, 'X');
-    spaces[box] = 'X';
-    if(MainWindow::checkWinner() || MainWindow::checkTie()){
-        return;
-    }
-    MainWindow::getAIMove();
-    MainWindow::checkWinner();
 }
 
 void MainWindow::on_box0_released()
